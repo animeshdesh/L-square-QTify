@@ -1,0 +1,17 @@
+.wrapper {
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-family: Poppins;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: 0px;
+  text-align: center;
+}
