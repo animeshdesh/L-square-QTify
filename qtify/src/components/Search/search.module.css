@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  box-sizing: border-box;
+}
+.search {
+  padding: 14px 20px;
+  border-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border: 1px solid var(--color-black);
+  width: 502px;
+}
+
+.searchbutton {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 14px 20px;
+  border: 1px solid var(--color-black);
+  border-left: none;
+  cursor: pointer;
+}
