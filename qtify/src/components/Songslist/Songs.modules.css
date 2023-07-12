@@ -1,0 +1,21 @@
+.songs-wrapper {
+  display: inline-flex;
+  overflow: hidden;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.main-section {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.main-btn {
+  margin-right: 50px;
+  background-color: var(--color-black);
+  color: var(--color-primary);
+  padding: 15px 35px;
+  font-size: 15px;
+  font-family: "poppins";
+}
