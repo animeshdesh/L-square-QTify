@@ -24,6 +24,7 @@
   display: flex;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  gap: 40px;
 }
 .pre-btn,
 .next-btn {

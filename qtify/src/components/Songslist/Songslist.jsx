@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Displaycard from "../Displaycard/Displaycard";
 import axios from "axios";
 import { Button, Grid, Typography } from "@mui/material";
@@ -6,16 +6,17 @@ import "./Songs.modules.css";
 
 const albumNewApi = "https://qtify-backend-labs.crio.do/albums/top";
 
-const Songslist = () => {
-  const [Songs, setSongs] = useState([]);
+const Songslist = ({ name, API }) => {
+  const [albums, setAlbums] = useState([]);
   const [ShowCarausol, setShowCarausol] = useState(true);
-  let box = document.querySelector(".product-container");
+  const containerRef = useRef(null);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(albumNewApi);
+      const response = await axios.get(API);
       const data = await response.data;
-      setSongs(data);
+      setAlbums(data);
+      console.log(data);
     } catch (e) {
       console.log(e.response.error);
     }
@@ -30,28 +31,26 @@ const Songslist = () => {
   };
 
   const btnpressprev = () => {
-    let width = box.clientWidth;
-    box.scrollLeft = box.scrollLeft - width;
-    console.log(width);
+    let width = containerRef.current.clientWidth;
+    containerRef.current.scrollLeft -= width;
   };
 
   const btnpressnext = () => {
-    let width = box.clientWidth;
-    box.scrollLeft = box.scrollLeft + width;
-    console.log(width);
+    let width = containerRef.current.clientWidth;
+    containerRef.current.scrollLeft += width;
   };
 
   return (
     <div>
       <div className="main-section">
         <Typography sx={{ fontFamily: "poppins", fontSize: "25px" }}>
-          Top Album
+          {name}
         </Typography>
         <Button
           sx={{ color: "#34c94b", fontFamily: "poppins", fontSize: "20px" }}
           onClick={handleShowAll}
         >
-          Show All
+          {ShowCarausol ? "Show All" : "Collapse"}
         </Button>
       </div>
       {ShowCarausol ? (
@@ -63,13 +62,14 @@ const Songslist = () => {
             <button className="next-btn" onClick={btnpressnext}>
               <p>&gt;</p>
             </button>
-            <div className="product-container">
-              {Songs.map((song) => {
+            <div className="product-container" ref={containerRef}>
+              {albums.map((songs) => {
                 return (
                   <Displaycard
-                    albumImage={song.image}
-                    followers={song.follows}
-                    title={song.title}
+                    albumImage={songs.image}
+                    followers={songs.follows}
+                    title={songs.title}
+                    length={songs.songs.length}
                   />
                 );
               })}
@@ -77,25 +77,29 @@ const Songslist = () => {
           </div>
         </div>
       ) : (
-        <Grid
-          container
-          marginY="1rem"
-          paddingX="1rem"
-          spacing={2}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
-          {Songs.map((song) => {
-            return (
-              <Grid item xs={1.6} md={1.6} key={song.id}>
-                <Displaycard
-                  albumImage={song.image}
-                  followers={song.follows}
-                  title={song.title}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
+        <div className="grid-wrapper">
+          <Grid
+            container
+            marginY="1rem"
+            paddingX="1rem"
+            spacing={2}
+            gap="40px"
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            {albums.map((songs) => {
+              return (
+                <Grid item xs={1.5} md={1.5} key={songs.id}>
+                  <Displaycard
+                    albumImage={songs.image}
+                    followers={songs.follows}
+                    title={songs.title}
+                    length={songs.songs.length}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </div>
       )}
     </div>
   );
