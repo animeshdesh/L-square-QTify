@@ -1,0 +1,8 @@
+.main-accordion {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+}
