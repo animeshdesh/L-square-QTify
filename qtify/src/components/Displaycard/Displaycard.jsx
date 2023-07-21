@@ -9,10 +9,14 @@ import {
   Chip,
   Tooltip,
 } from "@mui/material";
-const Displaycard = ({ albumImage, followers, title, length }) => {
+const Displaycard = ({ albumImage, followers, title, length, filter }) => {
   return (
     <>
-      <Tooltip title={`${length} Songs`} placement="top" arrow>
+      <Tooltip
+        title={`${length} ${filter ? "Likes" : "Songs"}`}
+        placement="top"
+        arrow
+      >
         <div>
           <Card
             sx={{ width: 180, height: 253, borderRadius: "20px", margin: 2 }}
@@ -26,7 +30,7 @@ const Displaycard = ({ albumImage, followers, title, length }) => {
             />
             <CardContent sx={{ margin: "-7px" }}>
               <Chip
-                label={`${followers} Follows`}
+                label={`${followers} ${filter ? "Likes" : "Follows"}`}
                 sx={{ backgroundColor: "black", color: "white" }}
                 size="small"
               />{" "}

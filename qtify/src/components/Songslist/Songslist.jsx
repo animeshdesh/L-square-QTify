@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import Displaycard from "../Displaycard/Displaycard";
 import axios from "axios";
 import { Button, Grid, Typography } from "@mui/material";
+
 import "./Songs.modules.css";
 
-const albumNewApi = "https://qtify-backend-labs.crio.do/albums/top";
-
-const Songslist = ({ name, API }) => {
+const Songslist = ({ name, API, filter, genreAPI }) => {
   const [albums, setAlbums] = useState([]);
   const [ShowCarausol, setShowCarausol] = useState(true);
+
   const containerRef = useRef(null);
 
   const fetchData = async () => {
@@ -16,7 +16,6 @@ const Songslist = ({ name, API }) => {
       const response = await axios.get(API);
       const data = await response.data;
       setAlbums(data);
-      console.log(data);
     } catch (e) {
       console.log(e.response.error);
     }
@@ -46,12 +45,16 @@ const Songslist = ({ name, API }) => {
         <Typography sx={{ fontFamily: "poppins", fontSize: "25px" }}>
           {name}
         </Typography>
-        <Button
-          sx={{ color: "#34c94b", fontFamily: "poppins", fontSize: "20px" }}
-          onClick={handleShowAll}
-        >
-          {ShowCarausol ? "Show All" : "Collapse"}
-        </Button>
+        {filter ? (
+          <></>
+        ) : (
+          <Button
+            sx={{ color: "#34c94b", fontFamily: "poppins", fontSize: "20px" }}
+            onClick={handleShowAll}
+          >
+            {ShowCarausol ? "Show All" : "Collapse"}
+          </Button>
+        )}
       </div>
       {ShowCarausol ? (
         <div>
@@ -65,12 +68,16 @@ const Songslist = ({ name, API }) => {
             <div className="product-container" ref={containerRef}>
               {albums.map((songs) => {
                 return (
-                  <Displaycard
-                    albumImage={songs.image}
-                    followers={songs.follows}
-                    title={songs.title}
-                    length={songs.songs.length}
-                  />
+                  <>
+                    <Displaycard
+                      key={songs.key}
+                      albumImage={songs.image}
+                      followers={songs.follows}
+                      title={songs.title}
+                      length={songs.songs.length}
+                      filter={filter}
+                    />
+                  </>
                 );
               })}
             </div>
@@ -94,6 +101,7 @@ const Songslist = ({ name, API }) => {
                     followers={songs.follows}
                     title={songs.title}
                     length={songs.songs.length}
+                    filter={filter}
                   />
                 </Grid>
               );
